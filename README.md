@@ -7,7 +7,7 @@
 ```bash
 # Clone repository
 git clone https://github.com/sbsLabib/seaEchoTSCalculator
-cd acoustic-ts-calculator
+cd seaEchoTSCalculator
 
 # Create virtual environment
 python -m venv ts-env
