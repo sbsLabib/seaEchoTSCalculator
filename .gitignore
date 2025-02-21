@@ -1,0 +1,14 @@
+# Virtual environment
+venv/
+ts-env/
+*.pyc
+__pycache__/
+*.pycache
+
+# IDE files
+.vscode/
+.idea/
+
+# Output files
+plots/*.png
+!plots/example_plot.png  # Keep sample plots

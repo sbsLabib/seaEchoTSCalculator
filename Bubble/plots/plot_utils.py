@@ -1,41 +1,44 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
-def plot_ts_vs_ka(ka_values, ts_results, discrete_ka_values=None, discrete_labels=None):
+def plot_ts_vs_frequency(frequencies, ts_results, discrete_frequencies=None, discrete_labels=None):
     """
-    Plot Target Strength (TS) results versus ka on a logarithmic x-axis.
+    Plot Target Strength (TS) versus frequency on a logarithmic x-axis using Matplotlib.
 
     Parameters:
     -----------
-    ka_values : array-like
-        ka values (dimensionless).
+    frequencies : array-like
+        Frequencies in kHz.
     ts_results : dict
         Dictionary containing TS results for each model.
-    discrete_ka_values : array-like, optional
-        Specific ka values to highlight.
-    discrete_labels : list of str, optional
-        Labels corresponding to discrete ka values.
+    discrete_frequencies : list, optional
+        Specific user-provided discrete frequencies to highlight.
+    discrete_labels : list, optional
+        Labels for the discrete frequencies.
     """
-    plt.figure(figsize=(10, 6))
+    # Create a figure and axis
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Plot each model
+    # Plot TS vs. frequency for each model
     for model, ts_values in ts_results.items():
-        plt.plot(ka_values, ts_values, label=model)
+        ax.semilogx(frequencies, ts_values, label=model, linestyle='-', linewidth=2)
 
-    # Highlight discrete points
-    if discrete_ka_values is not None and discrete_labels is not None:
-        for ka, label in zip(discrete_ka_values, discrete_labels):
-            for model, ts_values in ts_results.items():
-                idx = np.argmin(np.abs(ka_values - ka))  # Find closest ka
-                ts_value = ts_values[idx]
-                plt.scatter(ka, ts_value, label=f"{model} @ {label}", marker="o")
+    # Highlight discrete frequencies
+    if discrete_frequencies:
+        for freq, label in zip(discrete_frequencies, discrete_labels):
+            ax.axvline(x=freq, color='gray', linestyle='--', alpha=0.5)
+            ax.text(freq, min(ts_values), label, rotation=90, verticalalignment='bottom', fontsize=10)
 
-    # Formatting
-    plt.xscale("log")
-    plt.xlabel(r"$ka$ (dimensionless)")
-    plt.ylabel("Target Strength (dB)")
-    plt.title("Target Strength vs $ka$")
-    plt.legend()
-    plt.grid(True)
-    plt.savefig("ts_vs_ka_plot.png")
-    plt.show()
+    # Add labels and title
+    ax.set_xlabel("Frequency (kHz)", fontsize=12)
+    ax.set_ylabel("Target Strength (TS) [dB]", fontsize=12)
+    ax.set_title("Target Strength vs Frequency", fontsize=14)
+
+    # Add grid and legend
+    ax.grid(True, which="both", linestyle="--", linewidth=0.5)
+    ax.legend(title="Model", fontsize=10, title_fontsize=12)
+
+    # Save the plot to a file
+    plt.savefig("ts_vs_frequency_plot.png", dpi=300, bbox_inches="tight")
+    
+    # Close the plot to free up memory
+    plt.close()

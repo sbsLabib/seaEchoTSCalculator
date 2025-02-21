@@ -1,5 +1,7 @@
 # utils/ainslie_leighton_utils.py
 
+
+
 import numpy as np
 
 def compute_resonance_frequency(gamma, P_0, rho_0, R_0):
@@ -23,3 +25,11 @@ def compute_resonance_frequency_correction(omega_0_initial, beta_0, epsilon_0):
     """Apply correction to resonance frequency."""
     correction = 1 - (2 * beta_0**2 / omega_0_initial**2) - (epsilon_0**2 / 2)
     return omega_0_initial * np.sqrt(correction)
+
+def compute_scattering_cross_section_AL(omega, omega_0, beta_0, epsilon, R_0):
+    """Compute scattering cross-section for Ainslie-Leighton model."""
+    numerator = 4 * np.pi * R_0**2
+    term1 = (omega_0**2 / omega**2) - 1 - (2 * beta_0 * epsilon / omega)
+    term2 = (2 * beta_0 / omega) + (omega_0**2 / omega**2) * epsilon
+    denominator = term1**2 + term2**2
+    return numerator / denominator
