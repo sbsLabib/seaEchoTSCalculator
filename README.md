@@ -1,14 +1,12 @@
 # Installation Guide
 
 ## Requirements
-- Python ≥3.9
-- 4GB RAM minimum
-- 500MB disk space
+- Python ≥3.8
 
 ## Step-by-Step Setup
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/acoustic-ts-calculator.git #line needs edit
+git clone https://github.com/sbsLabib/seaEchoTSCalculator
 cd acoustic-ts-calculator
 
 # Create virtual environment
